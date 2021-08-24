@@ -2,6 +2,12 @@ import { Message } from "discord.js";
 import { db } from "../../db-client";
 import { BotCommand, CampaignSubCommand } from "../constants";
 
+/**
+ * Creates a standardized empty campaign to use that follows the ICampaign interface
+ * @param name - name of the campaign to create
+ * @param creatorID - person who created the campaign (who will be the first admin)
+ * @returns an empty campaign that standardizes our expected interface for interacting with one
+ */
 function createEmtpyCampaign(name: string, creatorID: string): ICampaign {
   return {
     name,
@@ -23,9 +29,18 @@ export async function handleCreateCampaignCommand(args: Array<string>, message: 
     return;
   }
 
-  console.log(args);
-  console.log(createEmtpyCampaign("Sexy robot", requesterID));
-
   const campaignName = args[1];
-  message.reply("I can try to create that...");
+  const campaign = createEmtpyCampaign(campaignName, requesterID);
+
+  if (!campaignName) {
+    message.reply("Your campaign needs a name.");
+    return;
+  }
+
+  try {
+    await db.createCampaign(campaign);
+  } catch (error) {
+    console.log(error);
+    message.reply("I just wanted to make everyone happy with my singing...");
+  }
 }
