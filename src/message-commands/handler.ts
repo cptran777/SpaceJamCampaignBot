@@ -1,5 +1,6 @@
 import { Message } from "discord.js";
 import { handleAssignCommand } from "./assign";
+import { handleCampaignCommand } from "./campaign";
 import { BotCommand, COMMAND_PREFIX } from "./constants";
 import { getRandomLOTRQuote } from "./sam";
 
@@ -18,11 +19,8 @@ export function messageCommandHandler(message: Message): void {
   switch(command) {
     case BotCommand.Assign: handleAssignCommand(args, message); break;
     case BotCommand.Sam: getRandomLOTRQuote(message); break;
+    case BotCommand.Campaign: handleCampaignCommand(args, message); break;
     default: 
       message.reply("I just want to make everyone happy with my singing.");
-  }
-
-  if (command === BotCommand.Assign) {
-    handleAssignCommand(args, message);
   }
 }

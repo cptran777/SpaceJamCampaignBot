@@ -1,4 +1,4 @@
-import { BotCommand } from "../constants";
+import { BotCommand, isValidSubCommand } from "../constants";
 import Discord from "discord.js";
 import { db } from "../../db-client";
 
@@ -24,6 +24,8 @@ export async function handleAssignCommand(args: Array<string>, message: Discord.
     return;
   }
 
+  console.log(args);
+
   const assignedCommand = args[1] as BotCommand;
   const assignableCommands = Object.values(BotCommand).filter(item => item !== BotCommand.Assign);
 
@@ -31,6 +33,12 @@ export async function handleAssignCommand(args: Array<string>, message: Discord.
     message.reply(`I don't recognize the command you want to assign to ${assignTarget.username}`);
     return
   }
+
+  const subCommands = args[2] || "";
+  const parsedSubCommands = subCommands
+    .split(",")
+    .filter(item => isValidSubCommand(item))
+    .map(item => `${assignedCommand}${item.toLowerCase()}`);
 
   console.log(message.mentions.users.first());
   console.log(message.mentions.users.first()?.id);
@@ -41,9 +49,11 @@ export async function handleAssignCommand(args: Array<string>, message: Discord.
   try {
     if (flags.includes("remove")) {
       await db.removeAssignedCommand(assignTarget.id, assignedCommand);
+      await db.removeSubCommands(assignTarget.id, parsedSubCommands);
       message.reply(`${assignTarget.username} can no longer user the command ${assignedCommand}`);
     } else {
       await db.assignCommand(assignTarget.id, assignedCommand);
+      await db.assignSubCommands(assignTarget.id, parsedSubCommands);
       message.reply(`${assignTarget.username} can now use the command ${assignedCommand}`);
     }
   } catch (error) {
