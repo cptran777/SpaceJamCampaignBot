@@ -1,11 +1,23 @@
-const discord = require("discord.js");
+require('dotenv').config()
+// To ensure that we do not mistype process.env variables, which are essentially "any" keys
+const PROCESS_ENV = process.env as NodeJS.ProcessEnv & IEnvironmentVariables;
 
-console.log("Hello world");
+import discord = require("discord.js");
+import { messageCommandHandler } from "./message-commands/handler";
+
+const { Client, Intents } = discord;
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+client.on("ready", () => { console.log(`Logged in as ${client.user!.tag}!`) });
+
+client.on("messageCreate", messageCommandHandler);
+
+client.login(PROCESS_ENV.BOT_TOKEN);
 
 /**
 const config = require('./config.json');
 const { Client, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
 
 const prefix = "!";
 

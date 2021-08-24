@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es6",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
@@ -14,8 +14,8 @@
     "inlineSources": true,
     "baseUrl": ".",
     "moduleResolution": "node",
-    "module": "es6",
-    "lib": ["es2017.object", "es2016", "dom", "dom.iterable", "scripthost"],
+    "module": "commonjs",
+    "lib": ["es2017.object", "es2016"],
     "listEmittedFiles": false,
     "experimentalDecorators": true,
     "downlevelIteration": true,
