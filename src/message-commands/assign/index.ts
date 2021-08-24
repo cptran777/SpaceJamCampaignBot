@@ -41,10 +41,10 @@ export async function handleAssignCommand(args: Array<string>, message: Discord.
   try {
     if (flags.includes("remove")) {
       await db.removeAssignedCommand(assignTarget.id, assignedCommand);
-      message.reply(`${assignTarget.username} can no longer user the command !${assignedCommand}`);
+      message.reply(`${assignTarget.username} can no longer user the command ${assignedCommand}`);
     } else {
       await db.assignCommand(assignTarget.id, assignedCommand);
-      message.reply(`${assignTarget.username} can now use the command !${assignedCommand}`);
+      message.reply(`${assignTarget.username} can now use the command ${assignedCommand}`);
     }
   } catch (error) {
     console.log(error);

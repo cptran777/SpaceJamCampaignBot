@@ -1,10 +1,16 @@
 import { db } from "../../db-client";
+import Discord from "discord.js";
+import { BotCommand } from "../constants";
 
-interface Props {
-  userID: string;
-}
+export async function getRandomLOTRQuote(message: Discord.Message): Promise<void> {
+  const requesterID = message.author.id;
+  const isRequesterAllowedCommand = await db.isUserAssignedCommand(requesterID, BotCommand.Sam);
 
-export async function getRandomLOTRQuote(_data: Props): Promise<string> {
+  if (!isRequesterAllowedCommand) {
+    message.reply(`Sorry, ${message.author.username}, you can't use the ${BotCommand.Sam} command.`);
+    return;
+  }
+
   const possibleQuotes = await db.getLOTRQuotes();
-  return possibleQuotes[Math.floor(Math.random() * possibleQuotes.length)];
+  message.reply(possibleQuotes[Math.floor(Math.random() * possibleQuotes.length)]);
 };
