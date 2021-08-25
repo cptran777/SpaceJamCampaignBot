@@ -15,17 +15,27 @@ function createEmtpyCampaign(name: string, creatorID: string): ICampaign {
     adminIDs: [creatorID],
     memberIDs: [],
     currency: "gold",
-    money: {}
-  }
+    money: {},
+    characters: [],
+    characterOwnership: {},
+  };
 }
 
-export async function handleCreateCampaignCommand(args: Array<string>, message: Message): Promise<void> {
+export async function handleCreateCampaignCommand(
+  args: Array<string>,
+  message: Message
+): Promise<void> {
   const createCampaignSubCommand = `${BotCommand.Campaign}${CampaignSubCommand.Create}`;
   const requesterID = message.author.id;
-  const isRequesterAllowedCommand = await db.isUserAssignedSubCommand(requesterID, createCampaignSubCommand);
+  const isRequesterAllowedCommand = await db.isUserAssignedSubCommand(
+    requesterID,
+    createCampaignSubCommand
+  );
 
   if (!isRequesterAllowedCommand) {
-    message.reply(`Sorry, ${message.author.username}, you can't create new campaigns.`);
+    message.reply(
+      `Sorry, ${message.author.username}, you can't create new campaigns.`
+    );
     return;
   }
 

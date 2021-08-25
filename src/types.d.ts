@@ -5,6 +5,10 @@ interface IEnvironmentVariables {
   ADMIN_ID: string;
 }
 
+interface ICampaignCharacter {
+  name: string;
+}
+
 interface ICampaign {
   /**
    * Stored name identifier for the campaign
@@ -23,11 +27,20 @@ interface ICampaign {
    */
   memberIDs: Array<string>;
   /**
+   * Assigned characters per member, keyed by member => character name
+   */
+  characterOwnership: Record<string, string>;
+  /**
+   * List of characters in the game
+   */
+  characters: Array<ICampaignCharacter>;
+  /**
    * Name of the currency used in the campaign
    */
   currency: string;
   /**
-   * Keeps track of the amount of money each member has
+   * Keeps track of the amount of money each member has as a key accessed as
+   * character => amount
    */
   money: Record<string, number>;
 }
