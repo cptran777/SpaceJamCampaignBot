@@ -10,16 +10,20 @@ export function messageCommandHandler(message: Message): void {
   if (!message.content.startsWith(COMMAND_PREFIX)) return;
 
   const commandBody = message.content.slice(COMMAND_PREFIX.length);
+  // Avoids wasting yargs parsing if the message invocation is not for vivy in the first place
+  // Using this simpler method helps us quickly recognize that, even if it's a little redundant
+  const args = commandBody.split(" ");
+  const invocation = args.shift()?.toLowerCase();
+
+  if (invocation !== "vivy") return;
 
   try {
     const args = yargs(commandBody);
 
     console.log("[ARGS]");
     console.log(args);
-
-    const invocation = args._.shift()?.toLowerCase();
-
-    if (invocation !== "vivy") return;
+    // Accommodates already having checked the vivy invocation
+    args._.shift()?.toLowerCase();
 
     if (args._.includes(`"light the fires of gondor"`)) {
       lightTheFiresOfGonder(message);
