@@ -4,7 +4,6 @@ const PROCESS_ENV = process.env as NodeJS.ProcessEnv & IEnvironmentVariables;
 
 import discord = require("discord.js");
 import { messageCommandHandler } from "./message-commands/handler";
-import { dbClient } from "./real-db-client";
 
 const { Client, Intents } = discord;
 const client = new Client({
