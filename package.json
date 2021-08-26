@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\"",
     "start": "node ./build/index.js",
     "build": "tsc",
-    "start-local": "yarn build && yarn start"
+    "start-local": "yarn build && yarn start",
+    "start-local-hot": "nodemon --watch ./src --exec \"yarn start-local\""
   },
   "repository": {
     "type": "git",
@@ -23,13 +24,16 @@
     "@discordjs/builders": "^0.5.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@types/node": "^16.7.1",
+    "@types/yargs": "^17.0.2",
     "csv-parse": "^4.16.0",
     "discord-api-types": "^0.22.0",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
     "path": "^0.12.7",
     "prettier": "^2.3.2",
     "ts-node": "^10.2.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "yargs": "^17.1.1"
   }
 }

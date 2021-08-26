@@ -5,3 +5,7 @@
 export function isUserMention(value: string): boolean {
   return /<@.+>/.test(value);
 }
+
+export function mentionUser(userID: string): string {
+  return `<@${userID}>`;
+}

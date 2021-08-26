@@ -3,7 +3,8 @@ import { handleAssignCommand } from "./assign";
 import { handleCampaignCommand } from "./campaign";
 import { BotCommand, COMMAND_PREFIX } from "./constants";
 import { logMessage } from "./log";
-import { getRandomLOTRQuote } from "./sam";
+import { getRandomLOTRQuote, lightTheFiresOfGonder } from "./sam";
+import yargs = require("yargs-parser");
 
 export function messageCommandHandler(message: Message): void {
   if (message.author.bot) return;
@@ -14,6 +15,14 @@ export function messageCommandHandler(message: Message): void {
   const invocation = args.shift()?.toLowerCase();
 
   if (invocation !== "vivy") return;
+
+  const newArgs = yargs(commandBody);
+  console.log(newArgs);
+
+  if (newArgs._.includes(`"light the fires of gondor"`)) {
+    lightTheFiresOfGonder(message);
+    return;
+  }
 
   const command = args.shift()?.toLowerCase();
 
@@ -28,7 +37,7 @@ export function messageCommandHandler(message: Message): void {
       handleCampaignCommand(args, message);
       break;
     case BotCommand.Log:
-      logMessage(message);
+      logMessage(args, message);
       break;
     default:
       message.reply("I just want to make everyone happy with my singing.");
