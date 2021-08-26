@@ -2,8 +2,9 @@ import { Message } from "discord.js";
 import { COMMAND_PREFIX } from "./constants";
 import { getRandomLOTRQuote, lightTheFiresOfGonder } from "./sam";
 import yargs = require("yargs-parser");
-import { BotCommand } from "../constants/commands";
+import { BotCommand, HELP_FLAG } from "../constants/commands";
 import { mentionUser } from "./utils/user";
+import { mainHelpMessage } from "./help/main-help-message";
 
 export function messageCommandHandler(message: Message): void {
   if (message.author.bot) return;
@@ -12,6 +13,7 @@ export function messageCommandHandler(message: Message): void {
   const commandBody = message.content.slice(COMMAND_PREFIX.length);
   // Avoids wasting yargs parsing if the message invocation is not for vivy in the first place
   // Using this simpler method helps us quickly recognize that, even if it's a little redundant
+  // Should also reduce potential causes for error
   const args = commandBody.split(" ");
   const invocation = args.shift()?.toLowerCase();
 
@@ -30,7 +32,13 @@ export function messageCommandHandler(message: Message): void {
       return;
     }
 
-    const command = args._[0].toLowerCase();
+    const command = args._[0]?.toLowerCase();
+
+    // Expected: !vivy --help
+    if (!command && args[HELP_FLAG]) {
+      mainHelpMessage(message);
+      return;
+    }
 
     switch (command) {
       case BotCommand.Sam:
@@ -50,6 +58,4 @@ export function messageCommandHandler(message: Message): void {
     message.reply("I just want to make everyone happy with my singing...");
     return;
   }
-
-  message.reply("I just want to make everyone happy with my singing.");
 }
