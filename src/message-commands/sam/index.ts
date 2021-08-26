@@ -2,6 +2,7 @@ import { db } from "../../db-client";
 import Discord from "discord.js";
 import { BotCommand } from "../constants";
 import { mentionUser } from "../utils";
+import { dbClient } from "src/real-db-client";
 
 export async function getRandomLOTRQuote(
   message: Discord.Message
@@ -30,7 +31,7 @@ export async function lightTheFiresOfGonder(
 ): Promise<void> {
   const requesterID = message.author.id;
 
-  const serverMemberIDs = await db.getAllServerMembers();
+  const serverMemberIDs = await dbClient.guild.getGondorMemberIDs();
   const serverMentions = serverMemberIDs.map((memberID) =>
     mentionUser(memberID)
   );

@@ -24,6 +24,10 @@ export function messageCommandHandler(message: Message): void {
     return;
   }
 
+  message.reply("I just want to make everyone happy with my singing.");
+
+  return;
+  // Currently need to rewrite the below
   const command = args.shift()?.toLowerCase();
 
   switch (command) {

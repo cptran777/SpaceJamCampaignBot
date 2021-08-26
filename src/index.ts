@@ -4,6 +4,7 @@ const PROCESS_ENV = process.env as NodeJS.ProcessEnv & IEnvironmentVariables;
 
 import discord = require("discord.js");
 import { messageCommandHandler } from "./message-commands/handler";
+import { dbClient } from "./real-db-client";
 
 const { Client, Intents } = discord;
 const client = new Client({
@@ -35,11 +36,3 @@ client.on('interactionCreate', async interaction => {
   }
 });
  */
-import yargs = require("yargs-parser");
-
-console.log(yargs("command --flag1 value1 --flag2 value2 sup"));
-console.log(
-  yargs(
-    `"and i say heeeey heeey heeey heey" command --help one --help2 "hello darkness my old friend"`
-  )
-);
