@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { COMMAND_PREFIX } from "./constants";
 import { getRandomLOTRQuote, lightTheFiresOfGonder } from "./sam";
 import yargs = require("yargs-parser");
-import { BotCommand } from "src/constants/commands";
+import { BotCommand } from "../constants/commands";
 import { mentionUser } from "./utils/user";
 
 export function messageCommandHandler(message: Message): void {
