@@ -3,6 +3,7 @@ interface IEnvironmentVariables {
   CLIENT_ID: string;
   SERVER_ID: string;
   ADMIN_ID: string;
+  DATABASE_URL: string;
 }
 
 interface ICampaignCharacter {
