@@ -2,7 +2,7 @@ import { db } from "../../db-client";
 import Discord from "discord.js";
 import { BotCommand } from "../constants";
 import { mentionUser } from "../utils";
-import { dbClient } from "src/real-db-client";
+import { dbClient } from "../../real-db-client";
 
 export async function getRandomLOTRQuote(
   message: Discord.Message
