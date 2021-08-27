@@ -5,6 +5,10 @@ import { IEnvironmentVariables } from "../../types/environment";
 import { assignCommandHelpMessage } from "./help";
 import { SHOULD_REMOVE_COMMAND_FLAG } from "./constants";
 import { dbClient } from "../../database/client";
+import {
+  handleSubCommandAssignment,
+  handleSubCommandRemoval,
+} from "./subcommands";
 
 // To ensure that we do not mistype process.env variables, which are essentially "any" keys
 const PROCESS_ENV = process.env as NodeJS.ProcessEnv & IEnvironmentVariables;
@@ -55,15 +59,19 @@ export async function handleAssignCommand(
 
   // Example usage: !vivy assign @Charlie sam --remove
   const shouldRemoveAssignment = Boolean(args[SHOULD_REMOVE_COMMAND_FLAG]);
+  const subCommands =
+    typeof argsList[3] === "string" ? argsList[3].split(",") : [];
 
   try {
     if (shouldRemoveAssignment) {
       await dbClient.assign.removeAssignedCommand(assignTarget.id, command);
+      await handleSubCommandRemoval(assignTarget.id, subCommands);
       message.reply(
         `${assignTarget.username} can no longer user the command ${command}`
       );
     } else {
       await dbClient.assign.assignCommand(assignTarget.id, command);
+      await handleSubCommandAssignment(assignTarget.id, subCommands);
       message.reply(
         `${assignTarget.username} can now use the command ${command}`
       );

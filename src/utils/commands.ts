@@ -8,3 +8,11 @@ import { BotCommand } from "../constants/commands";
 export const isValidCommand = (command: string): boolean => {
   return Object.values(BotCommand).includes(command as BotCommand);
 };
+
+/**
+ * Returns whether a subcommand is potentially valid or not (this is not as exact of a check
+ * because there are potentially multiple tiers of commands/subcommands, but the value has to at
+ * least exist before we try to handle it)
+ * @returns whether or not the subcommand is valid
+ */
+export const isValidSubCommand = (): boolean => false;

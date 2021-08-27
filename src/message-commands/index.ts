@@ -6,7 +6,13 @@ import { BotCommand, HELP_FLAG } from "../constants/commands";
 import { mentionUser } from "./utils/user";
 import { mainHelpMessage } from "./help/main-help-message";
 import { handleAssignCommand } from "./assign";
+import { logMessage } from "./log";
 
+/**
+ * Main handler for handling incoming messages, with a high level check then a router to specified
+ * lower level handlers for specific commands, if one has been given
+ * @param message - triggering message
+ */
 export function messageCommandHandler(message: Message): void {
   if (message.author.bot) return;
   if (!message.content.startsWith(COMMAND_PREFIX)) return;
@@ -47,6 +53,9 @@ export function messageCommandHandler(message: Message): void {
         break;
       case BotCommand.Assign:
         handleAssignCommand(args, message);
+        break;
+      case BotCommand.Log:
+        logMessage(args, message);
         break;
       default:
         message.reply(
