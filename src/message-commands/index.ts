@@ -7,6 +7,7 @@ import { mentionUser } from "./utils/user";
 import { mainHelpMessage } from "./help/main-help-message";
 import { handleAssignCommand } from "./assign";
 import { logMessage } from "./log";
+import { handleCampaignCommand } from "./campaign";
 
 /**
  * Main handler for handling incoming messages, with a high level check then a router to specified
@@ -56,6 +57,9 @@ export function messageCommandHandler(message: Message): void {
         break;
       case BotCommand.Log:
         logMessage(args, message);
+        break;
+      case BotCommand.Campaign:
+        handleCampaignCommand(args, message);
         break;
       default:
         message.reply(

@@ -1,6 +1,7 @@
 import pg = require("pg");
 import { IEnvironmentVariables } from "../../types/environment";
 import { AssignDAO } from "./assign/assign-dao";
+import { CampaignDAO } from "./campaign/campaign-dao";
 import { GuildDAO } from "./guild/guild-dao";
 import { getLOTRQuotes } from "./lotr-quotes";
 
@@ -18,9 +19,11 @@ client.connect();
 
 const guildDAO = new GuildDAO(client);
 const assignDAO = new AssignDAO(client);
+const campaignDAO = new CampaignDAO(client);
 
 export const dbClient = {
   guild: guildDAO,
   assign: assignDAO,
+  campaign: campaignDAO,
   getLOTRQuotes,
 };

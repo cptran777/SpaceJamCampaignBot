@@ -1,7 +1,7 @@
 import pg = require("pg");
 import { BotCommand } from "../../../constants/commands";
-import { isValidCommand } from "../../../utils/commands";
-import { COMMAND_ASSIGNMENTS_TABLE } from "../constants";
+import { isValidCommand, isValidSubCommand } from "../../../utils/commands";
+import { COMMAND_ASSIGNMENTS_TABLE, SUB_COMMAND_ASSIGNMENTS_TABLE } from "../constants";
 
 export class AssignDAO {
   private client: pg.Client;
@@ -12,8 +12,6 @@ export class AssignDAO {
    * @param command command to be assigned to a user
    */
   async assignCommand(userID: string, command: BotCommand): Promise<void> {
-    if (!isValidCommand(command)) return;
-
     const isAssignedAlready = await this.isUserAssignedCommand(userID, command);
 
     if (isAssignedAlready) return;
@@ -55,6 +53,44 @@ export class AssignDAO {
 
     const checkExistingEntryResponse = await this.client.query(
       `SELECT * from ${COMMAND_ASSIGNMENTS_TABLE} where user_id = $1 and command_name = $2`,
+      [userID, command]
+    );
+
+    const isAssignedAlready = checkExistingEntryResponse.rows.length !== 0;
+    return isAssignedAlready;
+  }
+
+  async assignSubCommand(userID: string, command: string): Promise<void> {
+    const isAssignedAlready = await this.isUserAssignedSubCommand(userID, command);
+
+    if (isAssignedAlready) return;
+
+    await this.client.query(
+      `INSERT INTO ${SUB_COMMAND_ASSIGNMENTS_TABLE} (sub_command_name, user_id) VALUES ($1, $2)`,
+      [command, userID]
+    );
+  }
+
+  async removeAssignedSubCommand(
+    userID: string,
+    command: string
+  ): Promise<void> {
+    if (!isValidSubCommand(command)) return;
+
+    await this.client.query(
+      `DELETE FROM ${SUB_COMMAND_ASSIGNMENTS_TABLE} where sub_command_name = $1 and user_id = $2`,
+      [command, userID]
+    );
+  }
+
+  async isUserAssignedSubCommand(
+    userID: string,
+    command: string
+  ): Promise<boolean> {
+    if (!isValidSubCommand(command)) return false;
+
+    const checkExistingEntryResponse = await this.client.query(
+      `SELECT * from ${SUB_COMMAND_ASSIGNMENTS_TABLE} where user_id = $1 and sub_command_name = $2`,
       [userID, command]
     );
 

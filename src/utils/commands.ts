@@ -1,4 +1,4 @@
-import { BotCommand } from "../constants/commands";
+import { BotCommand, CampaignCommand } from "../constants/commands";
 
 /**
  * Returns whether a command is a valid command
@@ -15,4 +15,9 @@ export const isValidCommand = (command: string): boolean => {
  * least exist before we try to handle it)
  * @returns whether or not the subcommand is valid
  */
-export const isValidSubCommand = (): boolean => false;
+export const isValidSubCommand = (subcommand: string): boolean => {
+  const command = Object.values(BotCommand).find(item => subcommand.includes(item));
+  const sub = Object.values(CampaignCommand).find(item => subcommand.includes(item));
+
+  return Boolean(command && sub);
+};

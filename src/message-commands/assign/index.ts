@@ -62,16 +62,19 @@ export async function handleAssignCommand(
   const subCommands =
     typeof argsList[3] === "string" ? argsList[3].split(",") : [];
 
+  // Turns the subcommands into a format that is read by the DB
+  const compoundCommands = subCommands.map(item => `${command}${item}`.toLowerCase());
+
   try {
     if (shouldRemoveAssignment) {
       await dbClient.assign.removeAssignedCommand(assignTarget.id, command);
-      await handleSubCommandRemoval(assignTarget.id, subCommands);
+      await handleSubCommandRemoval(message, assignTarget.id, compoundCommands);
       message.reply(
         `${assignTarget.username} can no longer user the command ${command}`
       );
     } else {
       await dbClient.assign.assignCommand(assignTarget.id, command);
-      await handleSubCommandAssignment(assignTarget.id, subCommands);
+      await handleSubCommandAssignment(message, assignTarget.id, compoundCommands);
       message.reply(
         `${assignTarget.username} can now use the command ${command}`
       );
