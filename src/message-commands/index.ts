@@ -5,6 +5,7 @@ import yargs = require("yargs-parser");
 import { BotCommand, HELP_FLAG } from "../constants/commands";
 import { mentionUser } from "./utils/user";
 import { mainHelpMessage } from "./help/main-help-message";
+import { handleAssignCommand } from "./assign";
 
 export function messageCommandHandler(message: Message): void {
   if (message.author.bot) return;
@@ -43,6 +44,9 @@ export function messageCommandHandler(message: Message): void {
     switch (command) {
       case BotCommand.Sam:
         getRandomLOTRQuote(message);
+        break;
+      case BotCommand.Assign:
+        handleAssignCommand(args, message);
         break;
       default:
         message.reply(
