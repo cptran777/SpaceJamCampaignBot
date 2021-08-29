@@ -2,9 +2,12 @@ import { Message } from "discord.js";
 import { dbClient } from "../../database/client";
 import { Arguments } from "yargs";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
+import { USER_MENTION_GLOBAL_REGEX } from "../utils/user";
 
 const CAMPAIGN_NAME_FLAG = "name";
 const CAMPAIGN_CURRENCY_FLAG = "currency";
+const CAMPAIGN_CHARACTERS_FLAG = "characters";
+const CAMPAIGN_MEMBERS_FLAG = "players";
 
 /**
  * Creates a new campaign in the expected format that we can modify based on the user's flags set
@@ -55,9 +58,23 @@ export async function handleCampaignCreateCommand(
   const campaign = createEmptyCampaign(campaignName, requesterID);
 
   const currency = args[CAMPAIGN_CURRENCY_FLAG] as string;
+  const characters = args[CAMPAIGN_CHARACTERS_FLAG] as string;
+  const members = args[CAMPAIGN_MEMBERS_FLAG] as string;
 
   if (currency) {
     campaign.currency = currency;
+  }
+
+  if (typeof characters === "string") {
+    const listOfCharacters = characters.split(",");
+    campaign.characters = listOfCharacters;
+  }
+
+  if (typeof members === "string") {
+    // Expected is something like "<@memberID> <@memberID>"
+    const memberMentions = members.match(USER_MENTION_GLOBAL_REGEX);
+    if (memberMentions && memberMentions.length > 0) {
+    }
   }
 
   message.reply("This is only a test right now");
