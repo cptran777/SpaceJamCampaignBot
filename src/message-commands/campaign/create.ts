@@ -73,7 +73,10 @@ export async function handleCampaignCreateCommand(
   if (typeof members === "string") {
     // Expected is something like "<@memberID> <@memberID>"
     const rawMentionStrings = members.match(USER_MENTION_GLOBAL_REGEX);
+    console.log("raw strings: ");
+    console.log(rawMentionStrings);
     const mentionedIDs = message.mentions.users.map((user) => user.id);
+    console.log(mentionedIDs);
     // With these checks in place, only members who were properly mentioned can be added to the
     // campaign
     if (rawMentionStrings && rawMentionStrings.length > 0) {
