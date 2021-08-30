@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { dbClient } from "../../database/client";
 import { Arguments } from "yargs";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
-import { USER_MENTION_GLOBAL_REGEX } from "../utils/user";
+import { getMentionedUser, USER_MENTION_GLOBAL_REGEX } from "../utils/user";
 
 const CAMPAIGN_NAME_FLAG = "name";
 const CAMPAIGN_CURRENCY_FLAG = "currency";
@@ -51,7 +51,7 @@ export async function handleCampaignCreateCommand(
   const campaignName = args[CAMPAIGN_NAME_FLAG] as string;
 
   if (!campaignName || typeof campaignName !== "string") {
-    message.reply("Your campaign needs a name...");
+    message.reply("Your campaign needs a valid name...");
     return;
   }
 
@@ -72,15 +72,26 @@ export async function handleCampaignCreateCommand(
 
   if (typeof members === "string") {
     // Expected is something like "<@memberID> <@memberID>"
-    const memberMentions = members.match(USER_MENTION_GLOBAL_REGEX);
-    if (memberMentions && memberMentions.length > 0) {
-      const mentions = message.mentions.users;
-      const mentionedUsersIDs = mentions.map(user => user.id);
-      const addedMembers = memberMentions.filter(item => mentionedUsersIDs.includes(item));
-
-      
+    const rawMentionStrings = members.match(USER_MENTION_GLOBAL_REGEX);
+    const mentionedIDs = message.mentions.users.map((user) => user.id);
+    // With these checks in place, only members who were properly mentioned can be added to the
+    // campaign
+    if (rawMentionStrings && rawMentionStrings.length > 0) {
+      const membersToAdd = rawMentionStrings.filter((item) =>
+        mentionedIDs.includes(getMentionedUser(item))
+      );
+      campaign.memberIDs = membersToAdd;
     }
   }
 
-  message.reply("This is only a test right now");
+  try {
+    await dbClient.campaign.saveCampaign(campaign);
+    message.reply(
+      `Your campaign ${campaignName} should have been created successfully.`
+    );
+  } catch (error) {
+    console.log("[ERROR][CAMPAGIN CREATE]");
+    console.log(error);
+    message.reply("I couldn't create your campaign...");
+  }
 }
