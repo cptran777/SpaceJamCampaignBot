@@ -55,6 +55,15 @@ export async function handleCampaignCreateCommand(
     return;
   }
 
+  const existingCampaign = await dbClient.campaign.getCampaignByName(
+    campaignName
+  );
+
+  if (existingCampaign) {
+    message.reply(`A campaign with the name ${campaignName} already exists.`);
+    return;
+  }
+
   const campaign = createEmptyCampaign(campaignName, requesterID);
 
   const currency = args[CAMPAIGN_CURRENCY_FLAG] as string;
