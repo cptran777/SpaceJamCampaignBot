@@ -73,16 +73,13 @@ export async function handleCampaignCreateCommand(
   if (typeof members === "string") {
     // Expected is something like "<@memberID> <@memberID>"
     const rawMentionStrings = members.match(USER_MENTION_GLOBAL_REGEX);
-    console.log("raw strings: ");
-    console.log(rawMentionStrings);
     const mentionedIDs = message.mentions.users.map((user) => user.id);
-    console.log(mentionedIDs);
     // With these checks in place, only members who were properly mentioned can be added to the
     // campaign
     if (rawMentionStrings && rawMentionStrings.length > 0) {
-      const membersToAdd = rawMentionStrings.filter((item) =>
-        mentionedIDs.includes(getMentionedUser(item))
-      );
+      const membersToAdd = rawMentionStrings
+        .map((item) => getMentionedUser(item))
+        .filter((item) => mentionedIDs.includes(item));
       campaign.memberIDs = membersToAdd;
     }
   }
