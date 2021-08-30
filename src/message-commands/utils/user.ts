@@ -13,3 +13,12 @@ export function isUserMention(value: string): boolean {
 export function mentionUser(userID: string): string {
   return `<@${userID}>`;
 }
+
+/**
+ * Extracts a mentioned user from a string representation 
+ * @param mentionString - string to extract a userID from
+ */
+export function getMentionedUser(mentionString: string): string {
+  const userIDMatch = mentionString.match(/[0-9]+/);
+  return (userIDMatch && userIDMatch[0]) || "";
+}

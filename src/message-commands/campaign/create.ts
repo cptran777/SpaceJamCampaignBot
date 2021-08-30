@@ -74,6 +74,11 @@ export async function handleCampaignCreateCommand(
     // Expected is something like "<@memberID> <@memberID>"
     const memberMentions = members.match(USER_MENTION_GLOBAL_REGEX);
     if (memberMentions && memberMentions.length > 0) {
+      const mentions = message.mentions.users;
+      const mentionedUsersIDs = mentions.map(user => user.id);
+      const addedMembers = memberMentions.filter(item => mentionedUsersIDs.includes(item));
+
+      
     }
   }
 
