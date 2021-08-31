@@ -3,8 +3,12 @@ import { dbClient } from "../../database/client";
 import { Arguments } from "yargs";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
 import { handleCampaignCreateCommand } from "./create";
+import { handleCampaignAddMemberCommand } from "./add-member";
 
-export async function handleCampaignCommand(args: Arguments, message: Message): Promise<void> {
+export async function handleCampaignCommand(
+  args: Arguments,
+  message: Message
+): Promise<void> {
   const requesterID = message.author.id;
 
   const isRequesterAllowedCommand = await dbClient.assign.isUserAssignedCommand(
@@ -28,7 +32,12 @@ export async function handleCampaignCommand(args: Arguments, message: Message): 
     case CampaignCommand.Create:
       handleCampaignCreateCommand(args, message);
       break;
+    case CampaignCommand.AddMember:
+      handleCampaignAddMemberCommand(args, message);
+      break;
     default:
-      message.reply("Sorry, I don't know what you want me to do with that campaign");
+      message.reply(
+        "Sorry, I don't know what you want me to do with that campaign"
+      );
   }
 }

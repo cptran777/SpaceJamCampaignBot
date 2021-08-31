@@ -32,7 +32,6 @@ export async function handleCampaignCreateCommand(
   args: Arguments,
   message: Message
 ): Promise<void> {
-  console.log(args);
   const requesterID = message.author.id;
 
   const isRequesterAllowedCommand =

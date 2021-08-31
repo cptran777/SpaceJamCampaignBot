@@ -2,11 +2,12 @@ export enum BotCommand {
   Assign = "assign",
   Sam = "sam",
   Log = "log",
-  Campaign = "campaign"
+  Campaign = "campaign",
 }
 
 export enum CampaignCommand {
-  Create = "create"
+  Create = "create",
+  AddMember = "addplayer",
 }
 
 export const HELP_FLAG = "help";
