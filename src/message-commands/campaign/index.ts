@@ -4,6 +4,11 @@ import { Arguments } from "yargs";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
 import { handleCampaignCreateCommand } from "./create";
 import { handleCampaignAddMemberCommand } from "./add-member";
+import {
+  handleCampaignAddGroupFundsCommand,
+  handleCampaignRemoveGroupFundsCommand,
+} from "./modify-funds";
+import { handleGetGroupFundsCommand } from "./get-info";
 
 export async function handleCampaignCommand(
   args: Arguments,
@@ -34,6 +39,15 @@ export async function handleCampaignCommand(
       break;
     case CampaignCommand.AddMember:
       handleCampaignAddMemberCommand(args, message);
+      break;
+    case CampaignCommand.AddGroupFunds:
+      handleCampaignAddGroupFundsCommand(args, message);
+      break;
+    case CampaignCommand.SpendGroupFunds:
+      handleCampaignRemoveGroupFundsCommand(args, message);
+      break;
+    case CampaignCommand.GetGroupFunds:
+      handleGetGroupFundsCommand(args, message);
       break;
     default:
       message.reply(
