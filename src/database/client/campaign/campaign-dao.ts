@@ -125,7 +125,7 @@ export class CampaignDAO {
     } = databaseObject;
 
     await this.client.query(
-      `INSERT INTO ${CAMPAIGNS_TABLE} (name, owner_id, admin_ids, member_ids, characters, character_ownership, currency, money)
+      `INSERT INTO ${CAMPAIGNS_TABLE} (name, owner_id, admin_ids, member_ids, characters, character_ownership, currency, money, group_funds)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (name)
       DO
