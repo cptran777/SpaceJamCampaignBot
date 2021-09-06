@@ -30,7 +30,7 @@ export async function handleGetGroupFundsCommand(
   }
 
   const argsList = args._;
-  const campaignName = argsList[3];
+  const campaignName = argsList[2];
 
   if (!campaignName || typeof campaignName !== "string") {
     message.reply(`I can't tell which campaign you want to see funds for.`);
