@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { BotCommand, CampaignCommand } from "src/constants/commands";
-import { dbClient } from "src/database/client";
+import { BotCommand, CampaignCommand } from "../../constants/commands";
+import { dbClient } from "../../database/client";
 import { Arguments } from "yargs";
 
 const CHARACTER_NAME_FLAG = "character";
