@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
 import { dbClient } from "../../database/client";
 import { Arguments } from "yargs";
+import pluralize = require("pluralize");
 
 const FUNDS_AMOUNT_FLAG = "amount";
 enum GroupFundsAction {
@@ -139,9 +140,11 @@ async function modifyCampaignGroupFunds(
   campaign.groupFunds = currentAmount + modifiedAmount;
   await dbClient.campaign.saveCampaign(campaign);
 
+  const funds = campaign.groupFunds;
+
   message.reply(
     `${parsedAmount} successfully ${
       action === GroupFundsAction.ADD ? "added" : "removed"
-    }`
+    }. You now have ${funds} ${pluralize(campaign.currency, funds)}`
   );
 }
