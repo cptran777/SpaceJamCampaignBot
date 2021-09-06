@@ -1,5 +1,5 @@
 /**
- * In-code interface for working with table-top campaign objects. 
+ * In-code interface for working with table-top campaign objects.
  */
 interface ICampaign {
   /**
@@ -36,4 +36,5 @@ interface ICampaign {
    * Record of who has what money units, mapped as character name => amount
    */
   money: Record<string, number>;
+  groupFunds: number;
 }

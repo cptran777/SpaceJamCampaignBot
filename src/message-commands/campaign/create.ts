@@ -25,6 +25,7 @@ function createEmptyCampaign(name: string, ownerID: string): ICampaign {
     money: {},
     characters: [],
     characterOwnership: {},
+    groupFunds: 0,
   };
 }
 

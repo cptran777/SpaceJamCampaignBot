@@ -6,5 +6,6 @@ CREATE TABLE campaigns(
   characters TEXT,
   character_ownership TEXT,
   currency TEXT DEFAULT 'gold',
-  money TEXT
+  money TEXT,
+  group_funds INT
 );

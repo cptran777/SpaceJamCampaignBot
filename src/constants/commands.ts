@@ -8,6 +8,8 @@ export enum BotCommand {
 export enum CampaignCommand {
   Create = "create",
   AddMember = "addplayer",
+  AddGroupFunds = "addgroupfunds",
+  SpendGroupFunds = "spendgroupfunds",
 }
 
 export const HELP_FLAG = "help";
