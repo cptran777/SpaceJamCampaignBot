@@ -133,7 +133,7 @@ export class CampaignDAO {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (name)
       DO
-        UPDATE SET name = $1, owner_id = $2, admin_ids = $3, member_ids = $4, characters = $5, character_ownership = $6, currency = $7, money = $8 group_funds = $9
+        UPDATE SET name = $1, owner_id = $2, admin_ids = $3, member_ids = $4, characters = $5, character_ownership = $6, currency = $7, money = $8, group_funds = $9
       `,
       [
         name,
