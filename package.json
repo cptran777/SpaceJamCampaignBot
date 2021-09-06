@@ -25,6 +25,7 @@
     "@discordjs/rest": "^0.1.0-canary.0",
     "@types/node": "^16.7.1",
     "@types/pg": "^8.6.1",
+    "@types/pluralize": "^0.0.29",
     "@types/yargs": "^17.0.2",
     "body-parser": "^1.19.0",
     "csv-parse": "^4.16.0",

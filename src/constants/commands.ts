@@ -10,6 +10,7 @@ export enum CampaignCommand {
   AddMember = "addplayer",
   AddGroupFunds = "addgroupfunds",
   SpendGroupFunds = "spendgroupfunds",
+  GetGroupFunds = "viewgroupfunds",
 }
 
 export const HELP_FLAG = "help";
