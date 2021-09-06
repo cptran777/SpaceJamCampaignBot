@@ -124,6 +124,10 @@ export class CampaignDAO {
       group_funds,
     } = databaseObject;
 
+    console.log("GROUP FUNDS");
+    console.log(group_funds);
+    console.log(typeof group_funds);
+
     await this.client.query(
       `INSERT INTO ${CAMPAIGNS_TABLE} (name, owner_id, admin_ids, member_ids, characters, character_ownership, currency, money, group_funds)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
