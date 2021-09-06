@@ -121,14 +121,15 @@ export class CampaignDAO {
       character_ownership,
       currency,
       money,
+      group_funds,
     } = databaseObject;
 
     await this.client.query(
       `INSERT INTO ${CAMPAIGNS_TABLE} (name, owner_id, admin_ids, member_ids, characters, character_ownership, currency, money)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (name)
       DO
-        UPDATE SET name = $1, owner_id = $2, admin_ids = $3, member_ids = $4, characters = $5, character_ownership = $6, currency = $7, money = $8
+        UPDATE SET name = $1, owner_id = $2, admin_ids = $3, member_ids = $4, characters = $5, character_ownership = $6, currency = $7, money = $8 group_funds = $9
       `,
       [
         name,
@@ -139,6 +140,7 @@ export class CampaignDAO {
         character_ownership,
         currency,
         money,
+        group_funds,
       ]
     );
   }
