@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
-import { dbClient } from "../../database/client";
+import { dbClient } from "../../../database/client";
 import { Arguments } from "yargs";
 import pluralize = require("pluralize");
 

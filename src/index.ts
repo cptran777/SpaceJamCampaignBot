@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 import discord = require("discord.js");
-import { messageCommandHandler } from "./message-commands";
+import { messageCommandHandler } from "./discord/message-commands";
 import { IEnvironmentVariables } from "./types/environment";
 
 // To ensure that we do not mistype process.env variables, which are essentially "any" keys

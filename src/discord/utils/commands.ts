@@ -16,8 +16,12 @@ export const isValidCommand = (command: string): boolean => {
  * @returns whether or not the subcommand is valid
  */
 export const isValidSubCommand = (subcommand: string): boolean => {
-  const command = Object.values(BotCommand).find(item => subcommand.includes(item));
-  const sub = Object.values(CampaignCommand).find(item => subcommand.includes(item));
+  const command = Object.values(BotCommand).find((item) =>
+    subcommand.includes(item)
+  );
+  const sub = Object.values(CampaignCommand).find((item) =>
+    subcommand.includes(item)
+  );
 
   return Boolean(command && sub);
 };

@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { dbClient } from "../../database/client";
+import { dbClient } from "../../../database/client";
 import { Arguments } from "yargs";
 import { BotCommand, CampaignCommand } from "../../constants/commands";
 import { getMentionedUser, USER_MENTION_GLOBAL_REGEX } from "../utils/user";

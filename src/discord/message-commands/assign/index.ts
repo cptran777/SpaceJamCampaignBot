@@ -1,10 +1,10 @@
 import { Message } from "discord.js";
 import { BotCommand, HELP_FLAG } from "../../constants/commands";
 import { Arguments } from "yargs";
-import { IEnvironmentVariables } from "../../types/environment";
+import { IEnvironmentVariables } from "../../../types/environment";
 import { assignCommandHelpMessage } from "./help";
 import { SHOULD_REMOVE_COMMAND_FLAG } from "./constants";
-import { dbClient } from "../../database/client";
+import { dbClient } from "../../../database/client";
 import {
   handleSubCommandAssignment,
   handleSubCommandRemoval,
@@ -63,7 +63,9 @@ export async function handleAssignCommand(
     typeof argsList[3] === "string" ? argsList[3].split(",") : [];
 
   // Turns the subcommands into a format that is read by the DB
-  const compoundCommands = subCommands.map(item => `${command}${item}`.toLowerCase());
+  const compoundCommands = subCommands.map((item) =>
+    `${command}${item}`.toLowerCase()
+  );
 
   try {
     if (shouldRemoveAssignment) {
@@ -74,7 +76,11 @@ export async function handleAssignCommand(
       );
     } else {
       await dbClient.assign.assignCommand(assignTarget.id, command);
-      await handleSubCommandAssignment(message, assignTarget.id, compoundCommands);
+      await handleSubCommandAssignment(
+        message,
+        assignTarget.id,
+        compoundCommands
+      );
       message.reply(
         `${assignTarget.username} can now use the command ${command}`
       );

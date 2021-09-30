@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import { mentionUser } from "../utils/user";
-import { dbClient } from "../../database/client";
+import { dbClient } from "../../../database/client";
 import { BotCommand } from "../../constants/commands";
 
 /**

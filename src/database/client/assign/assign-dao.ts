@@ -1,7 +1,13 @@
 import pg = require("pg");
-import { BotCommand } from "../../../constants/commands";
-import { isValidCommand, isValidSubCommand } from "../../../utils/commands";
-import { COMMAND_ASSIGNMENTS_TABLE, SUB_COMMAND_ASSIGNMENTS_TABLE } from "../constants";
+import { BotCommand } from "../../../discord/constants/commands";
+import {
+  isValidCommand,
+  isValidSubCommand,
+} from "../../../discord/utils/commands";
+import {
+  COMMAND_ASSIGNMENTS_TABLE,
+  SUB_COMMAND_ASSIGNMENTS_TABLE,
+} from "../constants";
 
 export class AssignDAO {
   private client: pg.Client;
@@ -61,7 +67,10 @@ export class AssignDAO {
   }
 
   async assignSubCommand(userID: string, command: string): Promise<void> {
-    const isAssignedAlready = await this.isUserAssignedSubCommand(userID, command);
+    const isAssignedAlready = await this.isUserAssignedSubCommand(
+      userID,
+      command
+    );
 
     if (isAssignedAlready) return;
 
